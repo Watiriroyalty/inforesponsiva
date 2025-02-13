@@ -34,7 +34,7 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- Custom CSS for Full-Screen Carousel and Responsive Text Rectangle -->
+  <!-- Custom CSS for Full-Screen Carousel -->
   <style>
     /* Full-screen carousel */
     #hero {
@@ -69,66 +69,6 @@
       padding: 20px;
       border-radius: 10px;
       text-align: center;
-    }
-
-    /* Text Rectangle */
-    .text-rectangle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80%; /* Adjust width as needed */
-      max-width: 800px; /* Maximum width for larger screens */
-      aspect-ratio: 16 / 9; /* Rectangle aspect ratio (16:9) */
-      background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    }
-
-    .text-rectangle h1 {
-      font-size: 2.5rem; /* Default font size */
-      margin: 0;
-    }
-
-    .text-rectangle p {
-      font-size: 1.2rem; /* Default font size */
-      margin: 10px 0 0;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .text-rectangle {
-        width: 90%; /* Adjust width for smaller screens */
-        aspect-ratio: 4 / 3; /* Change aspect ratio for smaller screens */
-      }
-
-      .text-rectangle h1 {
-        font-size: 2rem; /* Smaller font size for smaller screens */
-      }
-
-      .text-rectangle p {
-        font-size: 1rem; /* Smaller font size for smaller screens */
-      }
-    }
-
-    @media (max-width: 480px) {
-      .text-rectangle {
-        width: 95%; /* Adjust width for mobile screens */
-        aspect-ratio: 1 / 1; /* Square aspect ratio for mobile screens */
-      }
-
-      .text-rectangle h1 {
-        font-size: 1.5rem; /* Smaller font size for mobile screens */
-      }
-
-      .text-rectangle p {
-        font-size: 0.9rem; /* Smaller font size for mobile screens */
-      }
     }
 
     .dynamic-text-container {
@@ -236,14 +176,6 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-      </div>
-
-      <!-- Text Rectangle -->
-      <div class="text-rectangle">
-        <div>
-          <h1>WELCOME TO A NEW ERA</h1>
-          <p>Cyber Resilience Starts Here!! Protect. Detect. Respond. Stay ahead of evolving threats with our cutting-edge cybersecurity solutions.</p>
-        </div>
       </div>
 
       <!-- Dynamic Text and Social Links -->
