@@ -34,20 +34,24 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- Custom CSS for Fixed-Size Carousel -->
+  <!-- Custom CSS for Full-Screen Carousel -->
   <style>
+    /* Full-screen carousel */
     #hero {
       position: relative;
       height: 100vh; /* Full viewport height */
+      width: 100vw; /* Full viewport width */
       overflow: hidden;
     }
 
     #heroCarousel {
-      height: 80vh; /* Fixed height for the carousel */
+      height: 100vh; /* Full viewport height */
+      width: 100vw; /* Full viewport width */
     }
 
     .carousel-inner, .carousel-item {
       height: 100%;
+      width: 100%;
     }
 
     .carousel-item img {
@@ -57,10 +61,14 @@
     }
 
     .carousel-caption {
+      position: absolute;
       bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
       padding: 20px;
       border-radius: 10px;
+      text-align: center;
     }
 
     .dynamic-text-container {
@@ -123,7 +131,7 @@
 
   <main class="main">
 
-    <!-- Hero Section with Fixed-Size Bootstrap Carousel -->
+    <!-- Hero Section with Full-Screen Bootstrap Carousel -->
     <section id="hero" class="hero section transparent-background">
       <!-- Bootstrap Carousel -->
       <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
