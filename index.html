@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inforesponsiva Solutions</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050507;
+      --bg-soft: #0b0b12;
+      --text: #f7f4ff;
+      --muted: #c5bdd8;
+      --purple: #7c3aed;
+      --purple-soft: #c4a7ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at top left, rgba(124,58,237,0.18), transparent 30%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .wrap {
+      max-width: 520px;
+    }
+
+    h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2.4rem, 6vw, 3.5rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    h1 span {
+      color: var(--purple-soft);
+    }
+
+    .line {
+      width: 50px;
+      height: 1px;
+      background: var(--purple-soft);
+      margin: 18px auto;
+      opacity: 0.6;
+    }
+
+    .message {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .message a {
+      color: var(--purple-soft);
+      text-decoration: none;
+    }
+
+    .message a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Inforesponsiva <span>Solutions</span></h1>
+    <div class="line"></div>
+    <p class="message">
+      A new website design is in progress.<br>
+      <a href="mailto:partnerships@inforesponsiva.com">Contact us</a>
+    </p>
+  </main>
+</body>
+</html>
