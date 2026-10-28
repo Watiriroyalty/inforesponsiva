@@ -3,7 +3,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* Layout: bright white page, oversized Syne headlines, one live hero (cursor-reactive network),
      a lilac play section, and a solid violet contact block. Light look is a deliberate single theme. */
@@ -18,6 +18,8 @@
     --line: #e9e4f3;
     --good: #0f8a5f;
     --bad: #c2273d;
+  --grid: rgba(124, 58, 237, 0.08);
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
     --display: "Syne", "Inter", system-ui, sans-serif;
     --body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -92,11 +94,23 @@
   nav .pill:hover { background: var(--violet); color: #fff; }
 
   /* Hero */
-  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
-  #net { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .hero .wrap { position: relative; padding-block: clamp(4rem, 11vw, 8.5rem) clamp(4rem, 10vw, 7rem); pointer-events: none; }
-  .hero .wrap > * { pointer-events: auto; }
-  h1 { font-size: clamp(3.1rem, 10.5vw, 8.2rem); line-height: 0.92; font-weight: 800; letter-spacing: -0.045em; }
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: clamp(4rem, 11vw, 8rem);
+  }
+  .hero-copy { min-width: 0; }
+  h1 { font-size: clamp(3.1rem, 10vw, 8rem); line-height: 0.94; font-weight: 800; letter-spacing: -0.045em; }
+
   h1 em { font-style: normal; color: var(--violet); }
   .rotator { margin-top: 2rem; font-size: clamp(1.15rem, 2.4vw, 1.6rem); font-weight: 500; max-width: 38rem; }
   .rotator .word {
@@ -124,6 +138,7 @@
     transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
   .btn:hover { background: var(--violet); border-color: var(--violet); transform: translateY(-2px); }
+  .btn[hidden] { display: none; }
   .btn.ghost { background: transparent; color: var(--ink); }
   .btn.ghost:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
 
@@ -223,8 +238,8 @@
   .mail .subj { font-weight: 600; margin: 0.35rem 0 0.5rem; }
   .mail .body { font-size: 0.92rem; color: var(--muted); overflow-wrap: anywhere; }
   .mail .tag { display: none; margin-top: 0.8rem; font-size: 0.8rem; font-weight: 600; }
-  .mail.is-phish { border-color: var(--bad); }
-  .mail.is-phish .tag { display: block; color: var(--bad); }
+  .mail.is-phish.reveal { border-color: var(--bad); }
+  .mail.is-phish.reveal .tag { display: block; color: var(--bad); }
   .mail.is-safe.reveal { border-color: var(--good); }
   .mail.is-safe.reveal .tag { display: block; color: var(--good); }
   .feedback { min-height: 4.2rem; font-size: 0.97rem; }
@@ -312,14 +327,15 @@
 
 <main id="top">
   <div class="hero">
-    <canvas id="net" aria-hidden="true"></canvas>
-    <div class="wrap">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
       <h1>Securing <em>tomorrow,</em> today.</h1>
       <p class="rotator">We find the weak spots in your <span class="word" id="word">networks</span></p>
       <p class="lede">Inforesponsiva Solutions is a cybersecurity consultancy in Nairobi, Kenya. We protect the digital assets of individuals and organisations against emerging threats.</p>
       <div class="actions">
         <a class="btn" href="#contact">Schedule a consultation</a>
         <a class="btn ghost" href="#play">Spot the phish</a>
+      </div>
       </div>
     </div>
   </div>
@@ -541,79 +557,6 @@
         wEl.textContent = words[wi];
         wEl.style.animation = "";
       }, 2400);
-    }
-
-    /* Hero network: nodes drift, link when close, and flee the cursor. */
-    var canvas = document.getElementById("net");
-    var ctx = canvas.getContext("2d");
-    var hero = canvas.parentElement;
-    var W = 0, H = 0, dpr = 1, nodes = [], mouse = { x: -9999, y: -9999 }, visible = true;
-
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = hero.clientWidth; H = hero.clientHeight;
-      canvas.width = W * dpr; canvas.height = H * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.max(28, Math.min(80, Math.round(W * H / 14000)));
-      nodes = [];
-      for (var i = 0; i < n; i++) {
-        nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, r: 1.6 + Math.random() * 1.8, alert: Math.random() < 0.08 });
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      var link = 130;
-      for (var i = 0; i < nodes.length; i++) {
-        var a = nodes[i];
-        if (!reduce) {
-          var dx = a.x - mouse.x, dy = a.y - mouse.y, d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 140 && d > 0.1) { a.x += dx / d * (140 - d) * 0.04; a.y += dy / d * (140 - d) * 0.04; }
-          a.x += a.vx; a.y += a.vy;
-          if (a.x < 0 || a.x > W) a.vx *= -1;
-          if (a.y < 0 || a.y > H) a.vy *= -1;
-        }
-        for (var j = i + 1; j < nodes.length; j++) {
-          var b = nodes[j], ex = a.x - b.x, ey = a.y - b.y, e = Math.sqrt(ex * ex + ey * ey);
-          if (e < link) {
-            ctx.strokeStyle = "rgba(124,58,237," + (0.22 * (1 - e / link)) + ")";
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          }
-        }
-      }
-      var t = Date.now() / 600;
-      for (var k = 0; k < nodes.length; k++) {
-        var n = nodes[k];
-        ctx.beginPath();
-        ctx.fillStyle = n.alert ? "#c2273d" : "rgba(124,58,237,0.75)";
-        ctx.arc(n.x, n.y, n.r, 0, 6.283);
-        ctx.fill();
-        if (n.alert) {
-          var p = reduce ? 0.5 : (Math.sin(t + k) + 1) / 2;
-          ctx.beginPath();
-          ctx.strokeStyle = "rgba(194,39,61," + (0.5 - p * 0.4) + ")";
-          ctx.arc(n.x, n.y, 4 + p * 9, 0, 6.283);
-          ctx.stroke();
-        }
-      }
-    }
-
-    function loop() {
-      if (visible) draw();
-      if (!reduce) requestAnimationFrame(loop);
-    }
-    resize();
-    draw();
-    if (!reduce) requestAnimationFrame(loop);
-    window.addEventListener("resize", function () { resize(); draw(); });
-    hero.addEventListener("pointermove", function (e) {
-      var rc = hero.getBoundingClientRect();
-      mouse.x = e.clientX - rc.left; mouse.y = e.clientY - rc.top;
-    });
-    hero.addEventListener("pointerleave", function () { mouse.x = mouse.y = -9999; });
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(hero);
     }
 
     /* Spot the phish */
